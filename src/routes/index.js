@@ -36,6 +36,9 @@ import {
   Infaq,
   LoginGuru,
   NilaiAkademis,
+  Bantu,
+  BantuWaqaf,
+  AbsensiSiswa,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -100,6 +103,30 @@ export default function Router() {
       <Stack.Screen
         name="Results"
         component={Results}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="BantuWaqaf"
+        component={BantuWaqaf}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="AbsensiSiswa"
+        component={AbsensiSiswa}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="Bantu"
+        component={Bantu}
         options={{
           headerShown: false,
         }}

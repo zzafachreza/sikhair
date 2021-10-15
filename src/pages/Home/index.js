@@ -272,7 +272,7 @@ export default function Home({navigation}) {
                 nama="Nilai Tahfidz"
               />
               <DataKategori
-                onPress={() => navigation.navigate('Tahsin')}
+                onPress={() => navigation.navigate('AbsensiSiswa', user)}
                 icon="logo-youtube"
                 nama="Kehadiran"
               />
@@ -299,12 +299,12 @@ export default function Home({navigation}) {
                 nama="Riwayat Pembayaran"
               />
               <DataKategori
-                onPress={() => navigation.navigate('Buku')}
+                onPress={() => navigation.navigate('BantuWaqaf')}
                 icon="wallet"
                 nama="Waqaf Pesantren"
               />
               <DataKategori
-                onPress={() => navigation.navigate('Gallery')}
+                onPress={() => navigation.navigate('Bantu')}
                 icon="people"
                 nama="Bantu Santri Yatim/Dhuafa"
               />

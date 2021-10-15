@@ -26,9 +26,15 @@ import LoginGuru from './LoginGuru';
 import Wa from './Wa';
 import Infaq from './Infaq';
 import NilaiAkademis from './NilaiAkademis';
+import BantuWaqaf from './BantuWaqaf';
+import Bantu from './Bantu';
+import AbsensiSiswa from './AbsensiSiswa';
 
 export {
   Splash,
+  AbsensiSiswa,
+  Bantu,
+  BantuWaqaf,
   NilaiAkademis,
   Wa,
   LoginGuru,
