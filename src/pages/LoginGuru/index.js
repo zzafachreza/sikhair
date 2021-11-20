@@ -36,11 +36,11 @@ export default function LoginGuru({navigation}) {
 
   // login ok
   const masuk = () => {
-    setLoading(true);
+    // setLoading(true);
     console.log(data);
     setTimeout(() => {
       axios
-        .post('https://pesantrenkhairunnas.sch.id/api/login_guru.php', data)
+        .post('https://pesantrenkhairunnas.sch.id/api/login.php', data)
         .then(res => {
           console.log(res.data);
           setLoading(false);

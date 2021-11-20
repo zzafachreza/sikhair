@@ -36,7 +36,7 @@ export default function Login({navigation}) {
 
   // login ok
   const masuk = () => {
-    setLoading(true);
+    // setLoading(true);
     console.log(data);
     setTimeout(() => {
       axios
@@ -51,7 +51,6 @@ export default function Login({navigation}) {
             });
           } else {
             storeData('user', res.data);
-
             navigation.replace('MainApp');
           }
         });

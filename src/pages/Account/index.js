@@ -59,19 +59,19 @@ export default function Account({navigation}) {
             {user.nisn == null ? 'Data Guru' : 'Data Siswa'}
           </Text>
         </View>
-        {user.nisn == null ? (
+        {user.nis == null ? (
           <View></View>
         ) : (
-          <MyMenu label="NISN" isi={user.nisn} />
+          <MyMenu label="NISN" isi={user.nis} />
         )}
 
         <MyMenu
           label="Nama Lengkap"
-          isi={user.nama == null ? user.nama_guru : user.nama}
+          isi={user.nis == null ? user.nama_guru : user.nama_lengkap}
         />
         <MyMenu
           label="Jenis Kelamin"
-          isi={user.id_jenis_kelamin == 1 ? 'Laki- Laki' : ' Perempuan'}
+          isi={user.jns_kelamin == 1 ? 'Laki- Laki' : ' Perempuan'}
         />
 
         <MyMenu label="Tempat Lahir" isi={user.tempat_lahir} />

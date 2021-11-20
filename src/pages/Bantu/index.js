@@ -1,56 +1,185 @@
-import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  ActivityIndicator,
-} from 'react-native';
-import WebView from 'react-native-webview';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, Linking} from 'react-native';
+import axios from 'axios';
 import {getData} from '../../utils/localStorage';
 import {colors} from '../../utils/colors';
+import {fonts, windowWidth, windowHeight} from '../../utils/fonts';
+import {Icon} from 'react-native-elements';
+import {MyButton, MyGap} from '../../components';
 
-export default function Bantu({navigation, route}) {
-  const [visible, setVisible] = useState(true);
-  const hideSpinner = () => {
-    setVisible(false);
-  };
-
-  const myUrl = `https://zakatkita.org/`;
-
-  console.log(myUrl);
+export default function Bantu() {
+  const [user, setUser] = useState({});
+  const [data, setData] = useState({});
+  const [rekening, setRekening] = useState([]);
+  useEffect(() => {
+    getData('user').then(res => {
+      console.log(res);
+      axios
+        .post('https://www.pesantrenkhairunnas.sch.id/api/wa.php', {
+          id_cabang: res.fid_cabang,
+        })
+        .then(x => {
+          console.log('get data wa', x.data);
+          setData(x.data);
+        });
+      axios
+        .post('https://www.pesantrenkhairunnas.sch.id/api/rekening.php', {
+          id_cabang: res.fid_cabang,
+        })
+        .then(y => {
+          console.log('get data rekekning', y.data);
+          setRekening(y.data);
+        });
+    });
+  }, []);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
-        // padding: 10,
+        padding: 10,
       }}>
-      <WebView
-        onLoad={hideSpinner}
-        injectedJavaScript={`document.getElementsByClassName('footer-menu')[0].style.display = 'none';const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'); meta.setAttribute('name', 'viewport');`}
-        // injectedJavaScript={`const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `}
-        scalesPageToFit={false}
-        source={{
-          uri: myUrl,
-        }}
-      />
-      {visible && (
-        <View
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 10,
+          flexDirection: 'row',
+          backgroundColor: colors.secondary,
+        }}>
+        <Icon type="ionicon" name="play-forward" color={colors.white} />
+        <Text
           style={{
-            flex: 1,
-            position: 'absolute',
+            color: colors.white,
+            left: 10,
+            fontFamily: fonts.secondary[600],
+            fontSize: windowWidth / 25,
+          }}>
+          TRANSFER MANUAL
+        </Text>
+      </View>
+      <View style={{flex: 1}}>
+        {rekening.map(i => {
+          return (
+            <View
+              style={{
+                marginVertical: 10,
+                borderBottomColor: '#CDCDCD',
+                borderBottomWidth: 1,
+              }}>
+              <Text
+                style={{
+                  color: colors.primary,
+                  fontFamily: fonts.secondary[600],
+                  fontSize: windowWidth / 25,
+                }}>
+                BANK
+              </Text>
+              <Text
+                style={{
+                  color: colors.black,
+                  fontFamily: fonts.secondary[400],
+                  fontSize: windowWidth / 20,
+                }}>
+                {i.nama_bank}
+              </Text>
+              <Text
+                style={{
+                  color: colors.primary,
+                  fontFamily: fonts.secondary[600],
+                  fontSize: windowWidth / 25,
+                }}>
+                ATAS NAMA
+              </Text>
+              <Text
+                style={{
+                  color: colors.black,
+                  fontFamily: fonts.secondary[400],
+                  fontSize: windowWidth / 20,
+                }}>
+                {i.nama_rekening}
+              </Text>
+              <Text
+                style={{
+                  color: colors.primary,
+                  fontFamily: fonts.secondary[600],
+                  fontSize: windowWidth / 25,
+                }}>
+                NOMOR REKEKNING
+              </Text>
+              <Text
+                style={{
+                  color: colors.black,
+                  fontFamily: fonts.secondary[400],
+                  fontSize: windowWidth / 20,
+                }}>
+                {i.kode_rekening}
+              </Text>
+            </View>
+          );
+        })}
+
+        <TouchableOpacity
+          onPress={() =>
+            Linking.openURL(
+              `https://api.whatsapp.com/send?phone=${data.nomor_wa}&text=${data.text_isi}`,
+            )
+          }
+          style={{
+            // flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#FFF',
-            width: '100%',
-            top: 0,
-            opacity: 0.7,
-            height: '100%',
+            backgroundColor: colors.success,
+            borderRadius: 10,
+            padding: 10,
+            height: 70,
           }}>
-          <ActivityIndicator color={colors.primary} size="large" />
-        </View>
-      )}
-    </SafeAreaView>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Icon type="ionicon" name="logo-whatsapp" color={colors.white} />
+            <Text
+              style={{
+                color: colors.white,
+                left: 10,
+                fontFamily: fonts.secondary[400],
+                fontSize: windowWidth / 18,
+              }}>
+              Konfirmasi Bukti Transfer
+            </Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                color: colors.white,
+                fontFamily: fonts.secondary[600],
+                fontSize: windowWidth / 20,
+              }}>
+              {data.nama_admin}
+            </Text>
+            <Text
+              style={{
+                left: 10,
+                color: colors.white,
+                fontFamily: fonts.secondary[400],
+                fontSize: windowWidth / 20,
+              }}>
+              {data.nomor_wa}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <MyButton
+        onPress={() =>
+          Linking.openURL('https://zakatkita.org/bantubiayasekolahdhuafa')
+        }
+        Icons="play-forward"
+        title="VIA ZAKAT ORG"
+        warna={colors.success}
+      />
+    </View>
   );
 }
 

@@ -108,7 +108,7 @@ export default function MyDrawer({closeDrawer}) {
           flex: 1,
         }}>
         <TouchableOpacity
-          onPress={() => navigation.replace('MainApp')}
+          onPress={() => navigation.navigate('DataSantri')}
           style={{
             marginVertical: 10,
             backgroundColor: colors.tertiary,
@@ -130,7 +130,7 @@ export default function MyDrawer({closeDrawer}) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.replace('MainApp')}
+          onPress={() => navigation.navigate('DataSantri')}
           style={{
             marginVertical: 10,
             backgroundColor: colors.tertiary,
@@ -145,28 +145,6 @@ export default function MyDrawer({closeDrawer}) {
               color: colors.white,
             }}>
             Data Wali Santri
-          </Text>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Icon type="ionicon" name="chevron-forward" color={colors.white} />
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => navigation.replace('MainApp')}
-          style={{
-            marginVertical: 10,
-            backgroundColor: colors.tertiary,
-            padding: 10,
-            flexDirection: 'row',
-          }}>
-          <Text
-            style={{
-              flex: 1,
-              fontFamily: fonts.secondary[600],
-              fontSize: windowWidth / 22,
-              color: colors.white,
-            }}>
-            Setelan
           </Text>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Icon type="ionicon" name="chevron-forward" color={colors.white} />

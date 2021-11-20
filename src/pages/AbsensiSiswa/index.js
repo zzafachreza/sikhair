@@ -9,6 +9,8 @@ import {
 import WebView from 'react-native-webview';
 import {getData} from '../../utils/localStorage';
 import {colors} from '../../utils/colors';
+import {TouchableOpacity} from 'react-native';
+import {fonts, windowHeight} from '../../utils/fonts';
 
 export default function AbsensiSiswa({navigation, route}) {
   const [visible, setVisible] = useState(true);
@@ -25,35 +27,44 @@ export default function AbsensiSiswa({navigation, route}) {
     <SafeAreaView
       style={{
         flex: 1,
-        // padding: 10,
+        padding: 10,
       }}>
-      <WebView
-        onLoad={hideSpinner}
-        injectedJavaScript={`document.getElementsByClassName('footer-menu')[0].style.display = 'none';const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'); meta.setAttribute('name', 'viewport');`}
-        // injectedJavaScript={`const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `}
-        scalesPageToFit={false}
-        source={{
-          uri: myUrl,
-        }}
-      />
-      {visible && (
-        <View
-          style={{
-            flex: 1,
-            position: 'absolute',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#FFF',
-            width: '100%',
-            top: 0,
-            opacity: 0.7,
-            height: '100%',
-          }}>
-          <ActivityIndicator color={colors.primary} size="large" />
-        </View>
-      )}
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() =>
+          navigation.navigate('AbsenAkademik', {
+            nisn: route.params.nisn,
+          })
+        }>
+        <Text style={styles.cardText}>Kehadiran Akademik</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() =>
+          navigation.navigate('AbsenTahfidz', {
+            nisn: route.params.nisn,
+          })
+        }>
+        <Text style={styles.cardText}>Kehadiran Tahfidz</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: colors.primary,
+    marginVertical: 20,
+    borderRadius: 10,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+  cardText: {
+    fontFamily: fonts.secondary[600],
+    fontSize: windowHeight / 20,
+    color: colors.white,
+  },
+});

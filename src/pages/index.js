@@ -29,10 +29,31 @@ import NilaiAkademis from './NilaiAkademis';
 import BantuWaqaf from './BantuWaqaf';
 import Bantu from './Bantu';
 import AbsensiSiswa from './AbsensiSiswa';
+import NilaiTahfidz from './NilaiTahfidz';
+import DataPendidikan from './DataPendidikan';
+import DataTugas from './DataTugas';
+import DataBayar from './DataBayar';
+
+import AbsenAkademik from './AbsenAkademik';
+import AbsenTahfidz from './AbsenTahfidz';
+import DataTugasDetail from './DataTugasDetail';
+import Bayar from './Bayar';
+import DataSantri from './DataSantri';
+import Pencapaian from './Pencapaian';
 
 export {
   Splash,
+  Pencapaian,
+  DataSantri,
+  Bayar,
+  DataTugasDetail,
+  AbsenAkademik,
+  AbsenTahfidz,
   AbsensiSiswa,
+  NilaiTahfidz,
+  DataPendidikan,
+  DataTugas,
+  DataBayar,
   Bantu,
   BantuWaqaf,
   NilaiAkademis,

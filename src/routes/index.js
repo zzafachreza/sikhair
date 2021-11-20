@@ -39,6 +39,16 @@ import {
   Bantu,
   BantuWaqaf,
   AbsensiSiswa,
+  NilaiTahfidz,
+  DataPendidikan,
+  DataTugas,
+  DataBayar,
+  AbsenAkademik,
+  AbsenTahfidz,
+  DataTugasDetail,
+  Bayar,
+  DataSantri,
+  Pencapaian,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -123,6 +133,55 @@ export default function Router() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="Bayar"
+        component={Bayar}
+        options={{
+          headerShown: true,
+          headerTintColor: 'white',
+          title: 'Bayar Sekarang',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="DataSantri"
+        component={DataSantri}
+        options={{
+          headerShown: true,
+          headerTintColor: 'white',
+          title: 'Data Santri',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Pencapaian"
+        component={Pencapaian}
+        options={{
+          headerShown: true,
+          headerTintColor: 'white',
+          title: 'Pencapaian Tahfidz',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="DataTugasDetail"
+        component={DataTugasDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
 
       <Stack.Screen
         name="Bantu"
@@ -153,10 +212,10 @@ export default function Router() {
         }}
       />
       <Stack.Screen
-        name="ScheduleDetail"
-        component={ScheduleDetail}
+        name="NilaiTahfidz"
+        component={NilaiTahfidz}
         options={({route, navigation}) => ({
-          title: 'Menu1',
+          title: 'Nilai Tahfidz',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: colors.primary,
@@ -180,10 +239,10 @@ export default function Router() {
       />
 
       <Stack.Screen
-        name="Player"
-        component={Player}
+        name="DataPendidikan"
+        component={DataPendidikan}
         options={({route, navigation}) => ({
-          title: 'Menu1',
+          title: 'Data Pendidikan',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: colors.primary,
@@ -207,10 +266,10 @@ export default function Router() {
       />
 
       <Stack.Screen
-        name="PlayerDetail"
-        component={PlayerDetail}
+        name="DataTugas"
+        component={DataTugas}
         options={({route, navigation}) => ({
-          title: 'Menu1',
+          title: 'Daftar Tugas',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: colors.primary,
@@ -238,6 +297,87 @@ export default function Router() {
         component={EditProfile}
         options={({route, navigation}) => ({
           title: 'Menu1',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+          cardStyleInterpolator: ({current, layouts}) => {
+            return {
+              cardStyle: {
+                transform: [
+                  {
+                    translateX: current.progress.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [layouts.screen.width, 0],
+                    }),
+                  },
+                ],
+              },
+            };
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="DataBayar"
+        component={DataBayar}
+        options={({route, navigation}) => ({
+          title: 'Riwayat Pembayaran',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+          cardStyleInterpolator: ({current, layouts}) => {
+            return {
+              cardStyle: {
+                transform: [
+                  {
+                    translateX: current.progress.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [layouts.screen.width, 0],
+                    }),
+                  },
+                ],
+              },
+            };
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="AbsenAkademik"
+        component={AbsenAkademik}
+        options={({route, navigation}) => ({
+          title: 'Absensi Akademik',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+          cardStyleInterpolator: ({current, layouts}) => {
+            return {
+              cardStyle: {
+                transform: [
+                  {
+                    translateX: current.progress.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [layouts.screen.width, 0],
+                    }),
+                  },
+                ],
+              },
+            };
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="AbsenTahfidz"
+        component={AbsenTahfidz}
+        options={({route, navigation}) => ({
+          title: 'Absensi Tahfidz',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: colors.primary,

@@ -10,16 +10,15 @@ import WebView from 'react-native-webview';
 import {getData} from '../../utils/localStorage';
 import {colors} from '../../utils/colors';
 
-export default function Artikel({navigation, route}) {
-  const item = route.params;
-  console.log(item);
+export default function NilaiTahfidz({navigation, route}) {
   const [visible, setVisible] = useState(true);
   const hideSpinner = () => {
     setVisible(false);
   };
 
   const myUrl =
-    `https://www.pesantrenkhairunnas.sch.id/api/artikel.php?id=` + item.id;
+    `https://pesantrenkhairunnas.sch.id/api/nilai_tahfidz.php?nisn=` +
+    route.params.nisn;
 
   console.log(myUrl);
   return (
@@ -30,7 +29,7 @@ export default function Artikel({navigation, route}) {
       }}>
       <WebView
         onLoad={hideSpinner}
-        injectedJavaScript={`document.getElementById('header').style.display = 'none';const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'); meta.setAttribute('name', 'viewport');`}
+        injectedJavaScript={`document.getElementsByClassName('footer-menu')[0].style.display = 'none';const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'); meta.setAttribute('name', 'viewport');`}
         // injectedJavaScript={`const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `}
         scalesPageToFit={false}
         source={{

@@ -23,6 +23,7 @@ import axios from 'axios';
 import Drawer from 'react-native-drawer';
 import {MyButton} from '../../components';
 import MyCarouser2 from '../../components/MyCarouser2';
+import RenderHtml from 'react-native-render-html';
 
 export default function Home({navigation}) {
   const _drawer = useRef();
@@ -31,19 +32,19 @@ export default function Home({navigation}) {
   const [token, setToken] = useState('');
 
   const [berita, setBerita] = useState({});
-  const [bayar, setBayar] = useState({});
+  const [bayar, setBayar] = useState('0');
 
   useEffect(() => {
     getData('user').then(res => {
-      console.log('get user master nisn', res.nisn);
+      console.log('get user master nisn', res.nis);
       setUser(res);
       axios
         .post('https://pesantrenkhairunnas.sch.id/api/get_bayar.php', {
-          id: res.nisn,
+          id: res.nis,
         })
         .then(x => {
           console.log('get Bayarz', x);
-          // setBayar(res.data);
+          setBayar(x.data);
         });
       getData('token').then(res => {
         // console.log('data token,', res);
@@ -53,7 +54,7 @@ export default function Home({navigation}) {
     axios
       .post('https://pesantrenkhairunnas.sch.id/api/berita_terakhir.php')
       .then(res => {
-        console.log('update berita', res);
+        console.log('updates berita', res);
         setBerita(res.data);
       });
   }, []);
@@ -134,7 +135,7 @@ export default function Home({navigation}) {
             }}>
             <View style={{flex: 1, paddingTop: 15, flexDirection: 'row'}}>
               <View>
-                <View
+                {/* <View
                   style={{
                     width: 60,
                     // backgroundColor: colors.border,
@@ -156,7 +157,7 @@ export default function Home({navigation}) {
                     }}
                     style={{width: 60, height: 60}}
                   />
-                </View>
+                </View> */}
               </View>
               <View style={{flex: 1, paddingLeft: 10}}>
                 <Text
@@ -165,7 +166,7 @@ export default function Home({navigation}) {
                     color: colors.white,
                     fontFamily: fonts.secondary[600],
                   }}>
-                  {user.nama == null ? user.nama_guru : user.nama}
+                  {user.nis == null ? user.nama_guru : user.nama_lengkap}
                 </Text>
                 <Text
                   style={{
@@ -173,7 +174,7 @@ export default function Home({navigation}) {
                     color: colors.white,
                     fontFamily: fonts.secondary[400],
                   }}>
-                  {user.nisn == null ? user.nik : user.nisn}
+                  {user.nis == null ? user.nik : user.nis}
                 </Text>
               </View>
             </View>
@@ -230,7 +231,7 @@ export default function Home({navigation}) {
                 paddingTop: 10,
               }}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Artikel')}
+                onPress={() => navigation.navigate('Artikel', berita)}
                 style={{
                   flex: 1,
                 }}>
@@ -267,7 +268,7 @@ export default function Home({navigation}) {
                 nama="Nilai Akademik"
               />
               <DataKategori
-                onPress={() => navigation.navigate('Info')}
+                onPress={() => navigation.navigate('NilaiTahfidz', user)}
                 icon="information-circle"
                 nama="Nilai Tahfidz"
               />
@@ -277,7 +278,7 @@ export default function Home({navigation}) {
                 nama="Kehadiran"
               />
               <DataKategori
-                onPress={() => navigation.navigate('Beasiswa')}
+                onPress={() => navigation.navigate('DataPendidikan', user)}
                 icon="grid"
                 nama="Data Pendidikan"
               />
@@ -289,12 +290,12 @@ export default function Home({navigation}) {
                 marginTop: 15,
               }}>
               <DataKategori
-                onPress={() => navigation.navigate('Zakat')}
+                onPress={() => navigation.navigate('DataTugas', user)}
                 icon="file-tray-stacked"
                 nama="Daftar Tugas"
               />
               <DataKategori
-                onPress={() => navigation.navigate('Waqaf')}
+                onPress={() => navigation.navigate('DataBayar', user)}
                 icon="card"
                 nama="Riwayat Pembayaran"
               />
@@ -313,7 +314,7 @@ export default function Home({navigation}) {
           {/* menu */}
 
           {/* Bayar */}
-          {user.nisn && (
+          {user.nis && (
             <View
               style={{
                 height: windowHeight / 5,
@@ -347,10 +348,11 @@ export default function Home({navigation}) {
                       color: colors.black,
                       fontFamily: fonts.secondary[600],
                     }}>
-                    15.123.000
+                    {bayar}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                  onPress={() => Linking.openURL('https://zakatkita.org/')}
                   style={{
                     justifyContent: 'center',
                     marginVertical: 10,
@@ -376,6 +378,7 @@ export default function Home({navigation}) {
                   paddingTop: 10,
                 }}>
                 <TouchableOpacity
+                  onPress={() => navigation.navigate('DataBayar', user)}
                   style={{
                     flex: 1,
                   }}>
@@ -385,7 +388,7 @@ export default function Home({navigation}) {
                       color: colors.primary,
                       fontFamily: fonts.secondary[800],
                     }}>
-                    Baca Selengkapnya
+                    Lihat Selengkapnya
                   </Text>
                 </TouchableOpacity>
                 <Icon
