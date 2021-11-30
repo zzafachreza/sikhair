@@ -23,7 +23,7 @@ export default function Login({navigation}) {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState('');
   const [data, setData] = useState({
-    nisn: null,
+    username: null,
     password: null,
   });
 
@@ -36,7 +36,7 @@ export default function Login({navigation}) {
 
   // login ok
   const masuk = () => {
-    // setLoading(true);
+    setLoading(true);
     console.log(data);
     setTimeout(() => {
       axios
@@ -97,13 +97,13 @@ export default function Login({navigation}) {
         <View style={styles.page}>
           <MyGap jarak={20} />
           <MyInput
-            label="NISN"
-            iconname="card"
-            value={data.nisn}
+            label="username"
+            iconname="person"
+            value={data.username}
             onChangeText={value =>
               setData({
                 ...data,
-                nisn: value,
+                username: value,
               })
             }
           />

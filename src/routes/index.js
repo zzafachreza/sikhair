@@ -49,6 +49,8 @@ import {
   Bayar,
   DataSantri,
   Pencapaian,
+  AbsenGuru,
+  AbsenGuruTambah,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -140,6 +142,34 @@ export default function Router() {
           headerShown: true,
           headerTintColor: 'white',
           title: 'Bayar Sekarang',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="AbsenGuru"
+        component={AbsenGuru}
+        options={{
+          headerShown: true,
+          headerTintColor: 'white',
+          title: 'Absensi Pengajar',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="AbsenGuruTambah"
+        component={AbsenGuruTambah}
+        options={{
+          headerShown: true,
+          headerTintColor: 'white',
+          title: 'Tambah Absensi Pengajar',
           headerStyle: {
             backgroundColor: colors.primary,
             elevation: 0, // remove shadow on Android

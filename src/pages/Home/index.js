@@ -166,7 +166,7 @@ export default function Home({navigation}) {
                     color: colors.white,
                     fontFamily: fonts.secondary[600],
                   }}>
-                  {user.nis == null ? user.nama_guru : user.nama_lengkap}
+                  {user.nama_lengkap}
                 </Text>
                 <Text
                   style={{
@@ -174,7 +174,7 @@ export default function Home({navigation}) {
                     color: colors.white,
                     fontFamily: fonts.secondary[400],
                   }}>
-                  {user.nis == null ? user.nik : user.nis}
+                  {user.kode}
                 </Text>
               </View>
             </View>
@@ -262,21 +262,39 @@ export default function Home({navigation}) {
                 justifyContent: 'space-between',
                 marginTop: 15,
               }}>
-              <DataKategori
-                onPress={() => navigation.navigate('NilaiAkademis', user)}
-                icon="bookmarks"
-                nama="Nilai Akademik"
-              />
+              {user.kode == 'GURU' ? (
+                <DataKategori
+                  onPress={() => navigation.navigate('Pencapaian', user)}
+                  icon="folder"
+                  nama="Pencapaian Tahfidz"
+                />
+              ) : (
+                <DataKategori
+                  onPress={() => navigation.navigate('NilaiAkademis', user)}
+                  icon="bookmarks"
+                  nama="Nilai Akademik"
+                />
+              )}
               <DataKategori
                 onPress={() => navigation.navigate('NilaiTahfidz', user)}
                 icon="information-circle"
                 nama="Nilai Tahfidz"
               />
-              <DataKategori
-                onPress={() => navigation.navigate('AbsensiSiswa', user)}
-                icon="logo-youtube"
-                nama="Kehadiran"
-              />
+
+              {user.kode == 'GURU' ? (
+                <DataKategori
+                  onPress={() => navigation.navigate('AbsenGuru', user)}
+                  icon="logo-youtube"
+                  nama="Absensi Guru"
+                />
+              ) : (
+                <DataKategori
+                  onPress={() => navigation.navigate('AbsensiSiswa', user)}
+                  icon="logo-youtube"
+                  nama="Absensi Murid"
+                />
+              )}
+
               <DataKategori
                 onPress={() => navigation.navigate('DataPendidikan', user)}
                 icon="grid"
@@ -352,7 +370,9 @@ export default function Home({navigation}) {
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => Linking.openURL('https://zakatkita.org/')}
+                  onPress={() =>
+                    Linking.openURL('https://zakatkita.org/bayarspphj')
+                  }
                   style={{
                     justifyContent: 'center',
                     marginVertical: 10,

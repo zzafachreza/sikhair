@@ -23,42 +23,13 @@ export default function MyCarouser2() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    // axios.get('https://zavalabs.com/sebatiku/api/slider.php').then(res => {
-    //   setData(res.data);
-    // });
+    axios.get('https://pesantrenkhairunnas.sch.id/api/banner.php').then(res => {
+      setData(res.data);
+      console.log('banner', res.data);
+    });
   }, []);
 
-  const [data, setData] = useState([
-    {
-      go: 'Barang3',
-      image: {
-        uri: 'https://www.pesantrenkhairunnas.sch.id/wp-content/uploads/2020/08/Sekolah-Tahfidz-Khairunnas.jpeg',
-      },
-      id: '1',
-    },
-    {
-      go: 'Barang3',
-      image: {
-        uri: 'https://www.pesantrenkhairunnas.sch.id/wp-content/uploads/2020/08/SD-Islam-Surabaya-Khairunnas.jpeg',
-      },
-      id: '2',
-    },
-
-    {
-      go: 'Barang',
-      image: {
-        uri: 'https://www.pesantrenkhairunnas.sch.id/wp-content/uploads/2020/08/TK-Islam-Khairunnas.jpeg',
-      },
-      id: '17',
-    },
-    {
-      go: 'Barang2',
-      image: {
-        uri: 'https://www.pesantrenkhairunnas.sch.id/wp-content/uploads/2020/08/SMP-Khairunnas.jpeg',
-      },
-      id: '18',
-    },
-  ]);
+  const [data, setData] = useState([]);
 
   const renderCarouselItem = ({item}) => (
     <TouchableOpacity
@@ -66,7 +37,7 @@ export default function MyCarouser2() {
       style={styles.cardContainer}
       key={item.id}>
       <Image
-        source={item.image}
+        source={{uri: item.link_image}}
         style={{widht: 200, height: 130, resizeMode: 'cover'}}
       />
     </TouchableOpacity>
@@ -78,7 +49,7 @@ export default function MyCarouser2() {
         <ImageBackground
           key={item.id}
           resizeMode="contain"
-          source={item.image}
+          source={item.link_image}
           style={{
             height: Math.round((windowWidth * 9) / 14),
           }}

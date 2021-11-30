@@ -56,26 +56,22 @@ export default function Account({navigation}) {
       <ScrollView>
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Text style={{fontFamily: fonts.secondary[600], fontSize: 30}}>
-            {user.nisn == null ? 'Data Guru' : 'Data Siswa'}
+            {user.kode == 'GURU' ? 'Data Guru' : 'Data Siswa'}
           </Text>
         </View>
-        {user.nis == null ? (
+        {user.kode == 'GURU' ? (
           <View></View>
         ) : (
           <MyMenu label="NISN" isi={user.nis} />
         )}
 
-        <MyMenu
-          label="Nama Lengkap"
-          isi={user.nis == null ? user.nama_guru : user.nama_lengkap}
-        />
+        <MyMenu label="Nama Lengkap" isi={user.nama_lengkap} />
         <MyMenu
           label="Jenis Kelamin"
           isi={user.jns_kelamin == 1 ? 'Laki- Laki' : ' Perempuan'}
         />
 
         <MyMenu label="Tempat Lahir" isi={user.tempat_lahir} />
-        <MyMenu label="NIK" isi={user.nik} />
 
         <MyMenu
           label="alamat"

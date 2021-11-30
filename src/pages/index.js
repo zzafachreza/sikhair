@@ -40,9 +40,13 @@ import DataTugasDetail from './DataTugasDetail';
 import Bayar from './Bayar';
 import DataSantri from './DataSantri';
 import Pencapaian from './Pencapaian';
+import AbsenGuru from './AbsenGuru';
+import AbsenGuruTambah from './AbsenGuruTambah';
 
 export {
   Splash,
+  AbsenGuru,
+  AbsenGuruTambah,
   Pencapaian,
   DataSantri,
   Bayar,

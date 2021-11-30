@@ -23,7 +23,7 @@ export default function LoginGuru({navigation}) {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState('');
   const [data, setData] = useState({
-    nik: null,
+    username: null,
     password: null,
   });
 
@@ -36,11 +36,11 @@ export default function LoginGuru({navigation}) {
 
   // login ok
   const masuk = () => {
-    // setLoading(true);
+    setLoading(true);
     console.log(data);
     setTimeout(() => {
       axios
-        .post('https://pesantrenkhairunnas.sch.id/api/login.php', data)
+        .post('https://pesantrenkhairunnas.sch.id/api/login_guru.php', data)
         .then(res => {
           console.log(res.data);
           setLoading(false);
@@ -97,13 +97,13 @@ export default function LoginGuru({navigation}) {
         <View style={styles.page}>
           <MyGap jarak={20} />
           <MyInput
-            label="NIK"
-            iconname="card"
-            value={data.nik}
+            label="username"
+            iconname="person"
+            value={data.username}
             onChangeText={value =>
               setData({
                 ...data,
-                nik: value,
+                username: value,
               })
             }
           />
