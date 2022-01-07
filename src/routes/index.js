@@ -51,6 +51,8 @@ import {
   Pencapaian,
   AbsenGuru,
   AbsenGuruTambah,
+  PencapaianDetail,
+  PencapaianTambah,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -246,6 +248,60 @@ export default function Router() {
         component={NilaiTahfidz}
         options={({route, navigation}) => ({
           title: 'Nilai Tahfidz',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+          cardStyleInterpolator: ({current, layouts}) => {
+            return {
+              cardStyle: {
+                transform: [
+                  {
+                    translateX: current.progress.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [layouts.screen.width, 0],
+                    }),
+                  },
+                ],
+              },
+            };
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PencapaianDetail"
+        component={PencapaianDetail}
+        options={({route, navigation}) => ({
+          title: 'Detail Pencapaian',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+          cardStyleInterpolator: ({current, layouts}) => {
+            return {
+              cardStyle: {
+                transform: [
+                  {
+                    translateX: current.progress.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [layouts.screen.width, 0],
+                    }),
+                  },
+                ],
+              },
+            };
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PencapaianTambah"
+        component={PencapaianTambah}
+        options={({route, navigation}) => ({
+          title: 'Tambah Pencapaian',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: colors.primary,

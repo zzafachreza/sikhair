@@ -42,9 +42,13 @@ import DataSantri from './DataSantri';
 import Pencapaian from './Pencapaian';
 import AbsenGuru from './AbsenGuru';
 import AbsenGuruTambah from './AbsenGuruTambah';
+import PencapaianDetail from './PencapaianDetail';
+import PencapaianTambah from './PencapaianTambah';
 
 export {
   Splash,
+  PencapaianDetail,
+  PencapaianTambah,
   AbsenGuru,
   AbsenGuruTambah,
   Pencapaian,

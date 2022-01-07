@@ -1,58 +1,132 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
+  FlatList,
   SafeAreaView,
-  ActivityIndicator,
+  RefreshControl,
+  Image,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
-import WebView from 'react-native-webview';
-import {getData} from '../../utils/localStorage';
+import {storeData, getData} from '../../utils/localStorage';
+import axios from 'axios';
 import {colors} from '../../utils/colors';
+import {windowWidth, fonts} from '../../utils/fonts';
+import {Icon} from 'react-native-elements';
+import FileViewer from 'react-native-file-viewer';
+import DocumentPicker from 'react-native-document-picker';
+import RNFS from 'react-native-fs';
+import {MyGap} from '../../components';
 
-export default function AbsenAkademik({navigation, route}) {
-  const [visible, setVisible] = useState(true);
-  const hideSpinner = () => {
-    setVisible(false);
+const wait = timeout => {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
+};
+export default function ({navigation, route}) {
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [data, setData] = useState([]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getDataBarang();
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  useEffect(() => {
+    getDataBarang();
+  }, []);
+
+  const getDataBarang = () => {
+    axios
+      .get('https://pesantrenkhairunnas.sch.id/api/pendidikan.php')
+      .then(res => {
+        setData(res.data);
+      });
   };
 
-  const myUrl =
-    `https://pesantrenkhairunnas.sch.id/api/pendidikan.php?nisn=` +
-    route.params.nisn;
+  const renderItem = ({item}) => (
+    <>
+      <View style={{padding: 10, backgroundColor: colors.secondary}}>
+        <Text
+          style={{
+            fontSize: windowWidth / 30,
+            color: colors.white,
+            fontFamily: fonts.secondary[600],
+          }}>
+          {item.jam_mulai} - {item.jam_selesai}
+        </Text>
+      </View>
 
-  console.log(myUrl);
-  return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        // padding: 10,
-      }}>
-      <WebView
-        onLoad={hideSpinner}
-        injectedJavaScript={`document.getElementsByClassName('footer-menu')[0].style.display = 'none';const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'); meta.setAttribute('name', 'viewport');`}
-        // injectedJavaScript={`const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `}
-        scalesPageToFit={false}
-        source={{
-          uri: myUrl,
-        }}
-      />
-      {visible && (
+      <View
+        //   onPress={() => navigation.navigate('Pinjam', item)}
+        style={{
+          padding: 10,
+          marginBottom: 10,
+          backgroundColor: 'white',
+
+          // height: 80,
+          flexDirection: 'row',
+        }}>
         <View
           style={{
-            flex: 1,
-            position: 'absolute',
+            flex: 2,
             justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#FFF',
-            width: '100%',
-            top: 0,
-            opacity: 0.7,
-            height: '100%',
           }}>
-          <ActivityIndicator color={colors.primary} size="large" />
+          <Text
+            style={{
+              fontSize: windowWidth / 35,
+              color: colors.black,
+              fontFamily: fonts.secondary[400],
+            }}>
+            {item.nama_guru}
+          </Text>
+          <Text
+            style={{
+              fontSize: windowWidth / 28,
+              color: colors.black,
+              fontFamily: fonts.secondary[600],
+            }}>
+            {item.namamatapelajaran}
+          </Text>
         </View>
-      )}
-    </SafeAreaView>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('DataTugasDetail', item);
+          }}
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            // flex: 1,
+          }}>
+          <Icon type="ionicon" name="school-outline" color={colors.primary} />
+        </TouchableOpacity>
+      </View>
+    </>
+  );
+
+  return (
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          colors={[colors.primary]}
+        />
+      }
+      style={{
+        padding: 10,
+      }}>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
+      <MyGap jarak={10} />
+    </ScrollView>
   );
 }
 

@@ -23,6 +23,8 @@ const wait = timeout => {
 export default function ({navigation, route}) {
   const [refreshing, setRefreshing] = React.useState(false);
   const [data, setData] = useState([]);
+
+  const item = route.params;
   const [user, setUser] = useState({});
 
   const onRefresh = React.useCallback(() => {
@@ -39,9 +41,12 @@ export default function ({navigation, route}) {
     getData('user').then(res => {
       setUser(res);
       axios
-        .post('https://pesantrenkhairunnas.sch.id/api/hasil_belajar.php', {
-          fid_pengajar: res.fid_keterangan,
-        })
+        .post(
+          'https://pesantrenkhairunnas.sch.id/api/hasil_belajar_detail.php',
+          {
+            fid_hasil_belajar: route.params.id_hasil_belajar,
+          },
+        )
         .then(resp => {
           console.warn(resp.data);
           setData(resp.data);
@@ -66,7 +71,7 @@ export default function ({navigation, route}) {
             color: colors.primary,
             fontFamily: fonts.secondary[600],
           }}>
-          {item.hari}, {item.tgl_pertemuan}
+          {item.nama_lengkap}
         </Text>
         <Text
           style={{
@@ -97,7 +102,7 @@ export default function ({navigation, route}) {
               fontFamily: fonts.secondary[600],
               color: colors.black,
             }}>
-            Total Santri
+            Hafalan Dari
           </Text>
           <Text
             style={{
@@ -105,7 +110,7 @@ export default function ({navigation, route}) {
               textAlign: 'center',
               color: colors.secondary,
             }}>
-            {item.total_santri}
+            {item.juz_dari}
           </Text>
         </View>
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
@@ -115,7 +120,7 @@ export default function ({navigation, route}) {
               textAlign: 'center',
               color: colors.primary,
             }}>
-            Jam Belajar
+            {item.absensi}
           </Text>
           <Text
             style={{
@@ -139,7 +144,7 @@ export default function ({navigation, route}) {
               fontFamily: fonts.secondary[600],
               color: colors.black,
             }}>
-            Santri Hadir
+            Hafalan Sampai
           </Text>
           <Text
             style={{
@@ -147,7 +152,7 @@ export default function ({navigation, route}) {
               textAlign: 'center',
               color: colors.secondary,
             }}>
-            {item.jml_santri_hadir}
+            {item.juz_sampai}
           </Text>
         </View>
       </View>
@@ -166,21 +171,42 @@ export default function ({navigation, route}) {
       style={{
         padding: 10,
       }}>
-      <View style={{flexDirection: 'row'}}>
-        <View style={{flex: 1}}>
-          <Text>{user.nama_lengkap}</Text>
-        </View>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('PencapaianTambah')}
-          style={{
-            padding: 10,
-            backgroundColor: colors.primary,
-          }}>
-          <Text style={{color: colors.white, fontFamily: fonts.secondary[600]}}>
-            Tambah Pencapaian
-          </Text>
-        </TouchableOpacity>
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <Text>{user.nama_lengkap}</Text>
       </View>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          padding: 10,
+          justifyContent: 'space-between',
+          borderBottomWidth: 1,
+          borderBottomColor: '#CACACA',
+        }}>
+        <View>
+          <Text style={{fontFamily: fonts.secondary[800]}}>Tahun Periode</Text>
+          <Text>{item.nama_periode}</Text>
+          <Text>{item.tahun}</Text>
+          <View
+            style={{justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+            <Text style={{fontFamily: fonts.secondary[800]}}>Total Santri</Text>
+            <Text>{item.total_santri}</Text>
+          </View>
+        </View>
+        <View>
+          <Text style={{fontFamily: fonts.secondary[800]}}>Hari dan Jam</Text>
+          <Text>{item.nama_hari_belajar}</Text>
+          <Text>{item.nama_waktu_belajar}</Text>
+          <View
+            style={{justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+            <Text style={{fontFamily: fonts.secondary[800]}}>
+              Total Santri Hadir
+            </Text>
+            <Text>{item.jml_santri_hadir}</Text>
+          </View>
+        </View>
+      </View>
+
       <FlatList
         data={data}
         renderItem={renderItem}

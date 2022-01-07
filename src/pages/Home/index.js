@@ -296,7 +296,7 @@ export default function Home({navigation}) {
               )}
 
               <DataKategori
-                onPress={() => navigation.navigate('DataPendidikan', user)}
+                onPress={() => navigation.navigate('DataPendidikan')}
                 icon="grid"
                 nama="Data Pendidikan"
               />
