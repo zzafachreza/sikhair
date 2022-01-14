@@ -16,9 +16,11 @@ export default function AbsenTahfidz({navigation, route}) {
     setVisible(false);
   };
 
+  console.error(route.params);
+
   const myUrl =
     `https://pesantrenkhairunnas.sch.id/api/absensi_tahfidz.php?nisn=` +
-    route.params.nisn;
+    route.params.id_santri;
 
   console.log(myUrl);
   return (

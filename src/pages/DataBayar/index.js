@@ -91,7 +91,7 @@ export default function ({navigation, route}) {
               color: colors.primary,
               fontFamily: fonts.secondary[400],
             }}>
-            {item.bayar == 1 ? `Sudah Bayar ${item.tgl_bayar}` : 'Belum Bayar'}
+            {item.bayar == '' ? `BELUM BAYAR` : `SUDAH BAYAR ${item.tgl_bayar}`}
           </Text>
         </View>
         <View

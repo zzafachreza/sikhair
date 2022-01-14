@@ -44,7 +44,7 @@ import AbsenGuru from './AbsenGuru';
 import AbsenGuruTambah from './AbsenGuruTambah';
 import PencapaianDetail from './PencapaianDetail';
 import PencapaianTambah from './PencapaianTambah';
-
+import PencapaianDetailTambah from './PencapaianDetailTambah';
 export {
   Splash,
   PencapaianDetail,
@@ -65,6 +65,7 @@ export {
   Bantu,
   BantuWaqaf,
   NilaiAkademis,
+  PencapaianDetailTambah,
   Wa,
   LoginGuru,
   Infaq,

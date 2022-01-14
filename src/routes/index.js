@@ -53,6 +53,7 @@ import {
   AbsenGuruTambah,
   PencapaianDetail,
   PencapaianTambah,
+  PencapaianDetailTambah,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -302,6 +303,33 @@ export default function Router() {
         component={PencapaianTambah}
         options={({route, navigation}) => ({
           title: 'Tambah Pencapaian',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+          cardStyleInterpolator: ({current, layouts}) => {
+            return {
+              cardStyle: {
+                transform: [
+                  {
+                    translateX: current.progress.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [layouts.screen.width, 0],
+                    }),
+                  },
+                ],
+              },
+            };
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PencapaianDetailTambah"
+        component={PencapaianDetailTambah}
+        options={({route, navigation}) => ({
+          title: 'Tambah Santri',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: colors.primary,

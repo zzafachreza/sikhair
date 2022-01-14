@@ -15,6 +15,7 @@ import {useNavigation} from '@react-navigation/native';
 import {fonts} from '../../utils/fonts';
 import {Icon} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Linking} from 'react-native';
 
 export default function MyCarouser2() {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -33,7 +34,7 @@ export default function MyCarouser2() {
 
   const renderCarouselItem = ({item}) => (
     <TouchableOpacity
-      onPress={() => navigation.navigate(item.go, item)}
+      onPress={() => Linking.openURL(item.link_url)}
       style={styles.cardContainer}
       key={item.id}>
       <Image

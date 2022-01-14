@@ -20,6 +20,8 @@ import {useIsFocused} from '@react-navigation/native';
 
 export default function NilaiAkademis({navigation, route}) {
   const user = route.params;
+
+  console.log(user);
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([
     {

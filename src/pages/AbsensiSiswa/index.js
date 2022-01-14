@@ -41,11 +41,7 @@ export default function AbsensiSiswa({navigation, route}) {
 
       <TouchableOpacity
         style={styles.card}
-        onPress={() =>
-          navigation.navigate('AbsenTahfidz', {
-            nisn: route.params.nisn,
-          })
-        }>
+        onPress={() => navigation.navigate('AbsenTahfidz', route.params)}>
         <Text style={styles.cardText}>Kehadiran Tahfidz</Text>
       </TouchableOpacity>
     </SafeAreaView>

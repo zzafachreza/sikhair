@@ -93,17 +93,17 @@ export default function ({navigation, route}) {
             {item.namamatapelajaran}
           </Text>
         </View>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('DataTugasDetail', item);
-          }}
+        <View
+          // onPress={() => {
+          //   navigation.navigate('DataTugasDetail', item);
+          // }}
           style={{
             alignItems: 'center',
             justifyContent: 'center',
             // flex: 1,
           }}>
           <Icon type="ionicon" name="school-outline" color={colors.primary} />
-        </TouchableOpacity>
+        </View>
       </View>
     </>
   );

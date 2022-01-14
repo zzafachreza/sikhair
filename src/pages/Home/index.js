@@ -36,14 +36,14 @@ export default function Home({navigation}) {
 
   useEffect(() => {
     getData('user').then(res => {
-      console.log('get user master nisn', res.nis);
+      console.error('get user master nisn', res);
       setUser(res);
       axios
         .post('https://pesantrenkhairunnas.sch.id/api/get_bayar.php', {
-          id: res.nis,
+          id: res.id_santri,
         })
         .then(x => {
-          console.log('get Bayarz', x);
+          console.error('get Bayarz', x.data);
           setBayar(x.data);
         });
       getData('token').then(res => {

@@ -9,11 +9,13 @@ import {
   RefreshControl,
   Image,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {storeData, getData} from '../../utils/localStorage';
 import axios from 'axios';
 import {colors} from '../../utils/colors';
 import {windowWidth, fonts} from '../../utils/fonts';
+import {MyButton} from '../../components';
 
 const wait = timeout => {
   return new Promise(resolve => {
@@ -55,8 +57,8 @@ export default function ({navigation, route}) {
   };
 
   const renderItem = ({item}) => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('PencapaianDetail', item)}
+    <View
+      onPress={() => console.error(item.id_detail_hasil_belajar)}
       style={{
         padding: 10,
         margin: 10,
@@ -156,7 +158,42 @@ export default function ({navigation, route}) {
           </Text>
         </View>
       </View>
-    </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          Alert.alert('SIKHAIR', 'Apakah Anda yakin akan hapus ini ?', [
+            {
+              text: 'Cancel',
+            },
+            {
+              text: 'OK',
+              onPress: () => {
+                axios
+                  .post(
+                    'https://pesantrenkhairunnas.sch.id/api/delete_santri_hasil_belajar.php',
+                    {
+                      id: item.id_detail_hasil_belajar,
+                      id_hasil_belajar: item.fid_id_hasil_belajar,
+                    },
+                  )
+                  .then(res => {
+                    console.error(res.data);
+                    getPencapaianTahfidz();
+                  });
+              },
+            },
+          ]);
+        }}
+        style={{
+          padding: 10,
+          backgroundColor: colors.danger,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text style={{fontFamily: fonts.secondary[600], color: colors.white}}>
+          Hapus
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 
   return (
@@ -202,11 +239,24 @@ export default function ({navigation, route}) {
             <Text style={{fontFamily: fonts.secondary[800]}}>
               Total Santri Hadir
             </Text>
-            <Text>{item.jml_santri_hadir}</Text>
+            <Text>
+              {item.jml_santri_hadir === null ? 0 : item.jml_santri_hadir}
+            </Text>
           </View>
         </View>
       </View>
 
+      <View
+        style={{
+          padding: 10,
+        }}>
+        <MyButton
+          onPress={() => navigation.navigate('PencapaianDetailTambah', item)}
+          title="Tambahkan Santri"
+          warna={colors.primary}
+          Icons="person-add-outline"
+        />
+      </View>
       <FlatList
         data={data}
         renderItem={renderItem}

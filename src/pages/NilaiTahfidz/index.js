@@ -16,9 +16,11 @@ export default function NilaiTahfidz({navigation, route}) {
     setVisible(false);
   };
 
+  // console.error(route.params);
+
   const myUrl =
     `https://pesantrenkhairunnas.sch.id/api/nilai_tahfidz.php?nisn=` +
-    route.params.nisn;
+    route.params.fid_keterangan;
 
   console.log(myUrl);
   return (

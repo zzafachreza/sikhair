@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, SafeAreaView, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  ScrollView,
+  Picker,
+} from 'react-native';
 import {getData} from '../../utils/localStorage';
 import {colors} from '../../utils/colors';
 import {fonts, windowHeight} from '../../utils/fonts';
@@ -7,6 +14,7 @@ import {MyPicker, MyGap, MyInput, MyButton} from '../../components';
 import axios from 'axios';
 import CheckBox from '@react-native-community/checkbox';
 import {showMessage} from 'react-native-flash-message';
+import {Icon} from 'react-native-elements';
 
 export default function PencapaianTambah({navigation, route}) {
   const [user, setUser] = useState({});
@@ -15,12 +23,14 @@ export default function PencapaianTambah({navigation, route}) {
   const [pertemuan, setPertemuan] = useState([]);
   const [langkah, setLangkah] = useState('');
   const [group, setGroup] = useState('');
-
+  const [dataJam, setDataJam] = useState([]);
   const [catatan, setCatatan] = useState('');
   const [materi, setMateri] = useState('');
 
   const [isSelected, setSelection] = useState(false);
   const [isSelected2, setSelection2] = useState(false);
+
+  const [jam, setJam] = useState('0');
 
   const simpan = () => {
     axios
@@ -29,7 +39,9 @@ export default function PencapaianTambah({navigation, route}) {
         langkah: langkah,
         group: group,
         materi: materi,
+        id_kelas: id_kelas,
         catatan: catatan,
+        jam: jam,
       })
       .then(res => {
         console.warn(res.data);
@@ -54,6 +66,12 @@ export default function PencapaianTambah({navigation, route}) {
           console.log('hasi; get kelas', resp.data);
 
           setKelas(resp.data);
+        });
+
+      axios
+        .post('https://www.pesantrenkhairunnas.sch.id/api/get_jam_belajar.php')
+        .then(jam => {
+          setDataJam(jam.data);
         });
     });
   }, []);
@@ -93,6 +111,7 @@ export default function PencapaianTambah({navigation, route}) {
           {user.nama_asli}
         </Text>
         <MyGap jarak={5} />
+
         <MyPicker
           onValueChange={val => {
             setIdKelas(val);
@@ -123,12 +142,49 @@ export default function PencapaianTambah({navigation, route}) {
           data={pertemuan}
         />
         <MyGap jarak={5} />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingVertical: 5,
+          }}>
+          <Icon
+            type="ionicon"
+            name="time-outline"
+            color={colors.primary}
+            size={16}
+          />
+          <Text
+            style={{
+              fontFamily: fonts.secondary[600],
+              color: colors.primary,
+              left: 10,
+              fontSize: 16,
+            }}>
+            Pilih Jam Belajar
+          </Text>
+        </View>
+        <Picker
+          onValueChange={val => {
+            // console.warn('pertemuan', val);
+            setJam(val);
+          }}>
+          <Picker.Item value={0} label="Silahkan Pilih Jam Belajar" />
+          {dataJam.map(item => {
+            return (
+              <Picker.Item
+                value={item.id_waktu_belajar}
+                label={item.nama_waktu_belajar}
+              />
+            );
+          })}
+        </Picker>
+        <MyGap jarak={5} />
         <MyInput
           label="Materi Kelas"
           iconname="book-outline"
           onChangeText={val => setMateri(val)}
         />
-
         <MyGap jarak={5} />
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <CheckBox
